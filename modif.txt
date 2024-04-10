@@ -1,3 +1,0 @@
-Gérer la quantité des livres a encaisser
-gérer plusieurs livres (diff) a encaisser (comme un panier)
-voir si le mdp est requis ou si chacun a sa machine (donc accès limité)

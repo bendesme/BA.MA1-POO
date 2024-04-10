@@ -2,7 +2,6 @@ import json
 
 # Fonction principale pour poser la question et gérer les réponses
 def interaction_première():
-    print("\nBienvenu.e !")
     print("1. Client")
     print("2. Employer")
     print("3. Quitter le menu")
@@ -11,13 +10,23 @@ def interaction_première():
     if choix == '1':
         Interaction_client()
     elif choix == '2':
-        Interaction_employer()
+        code = input("Veuillez entrer le code d'accès : ")
+        if verif_code(code):
+            Interaction_employer()
+        else:
+            print("\nCode d'accès incorrect.")
+            interaction_première()
     elif choix == '3':
         print("\n Vous avez quitté le menu. \n")
     else:
         print("\nOption invalide. Veuillez choisir une option valide : 1, 2 ou 3 : ")
         interaction_première()
-        
+
+# Fonction pour verif code employer
+def verif_code(code):
+    code_ok = 'mama'
+    return code == code_ok
+
 # Définition des fonctions pour chaque option de réponse
 def Interaction_client():
     print("\nVous avez choisi l'option Client.")
@@ -37,8 +46,8 @@ def Interaction_employer():
         rechercher_livre()
     elif choix == '2':
         encaisser_livre()
-    elif choix == '3':
-        ajouter_livre()
+#    elif choix == '3':
+#        ajouter_livre()
     elif choix == '4':
         modifier_livre()
     elif choix == '5':
@@ -83,6 +92,15 @@ def rechercher_livre():
             print(f"Prix: {livre['prix']}€\n")
     else:
         print("\nAucun livre trouvé correspondant à votre recherche.\n")
+        print("\n1. effectuer une autre recherche.")
+        print("2. Quitter le menu.\n")
+        choix = input("Veuillez choisir une option : 1 ou 2 : ")
+        if choix == '1':
+            rechercher_livre()
+        elif choix == '2' :
+            print("\nVous avez quitté le menu.\n")
+        else:
+            print("\nOption invalide\n")
 
 #ENCAISSER UN LIVRE
 # Fonction pour rechercher un livre par titre
@@ -137,17 +155,59 @@ def encaisser_livre():
             encaisser_livre()
     else:
         print(f"Le livre avec le titre '{titre}' n'a pas été trouvé dans la base de données.")
+        print("\n1. effectuer une autre recherche.")
+        print("2. Quitter le menu.\n")
+        choix = input("Veuillez choisir une option : 1 ou 2 : ")
+        if choix == '1':
+            encaisser_livre()
+        elif choix == '2' :
+            print("\nVous avez quitté le menu.\n")
+        else:
+            print("\nOption invalide\n")
 
 #AJOUTER UN LIVRE
-def ajouter_livre():
-    print("Ajout d'un nouveau livre :")
-    titre = input("Titre du livre : ")
-    auteur = input("Auteur du livre : ")
-    isbn = input("ISBN du livre : ")
-    quantite = int(input("Quantité disponible : "))
-    editeur = input("Éditeur du livre : ")
-    prix = float(input("Prix du livre : "))
+"""
+def recherche_isbn(self):
+	isbn = input("Veuillez entrer un numéro ISBN : ")
 
+	url = f"https://openlibrary.org/api/books?bibkeys=ISBN:{isbn}&format=json&jscmd=data"
+
+	response = requests.get(url)
+	data = response.json()
+
+		# Extraire les informations nécessaires du résultat de l'API
+	title = data[f"ISBN:{isbn}"]['title']
+	author = data[f"ISBN:{isbn}"]['authors'][0]['name']
+	year=data[f"ISBN:{isbn}"]['publish_date']
+	maison_ed=data[f"ISBN:{isbn}"]['publishers'][0]["name"]
+
+		# Demander à l'utilisateur de saisir la quantité et le prix
+	quantity = int(input(f"Quantité en stock pour {title} : "))
+	price = float(input(f"Prix unitaire (en €) pour {title} : "))
+	articlenouv=Livre(isbn,title,price,author,maison_ed,year,None,"ND",isbn,quantity,None)
+
+		# Ajouter l'article au stock
+	self.articlesList.append(articlenouv)
+	print(f"Article ajouté de OpenLibrary : {title} de {author}")
+
+def ajouter_livre():
+    print("Voulez-vous ajouter un livre manuellement ou depuis une recherche Openlibrary ?")
+    print("1. Manuellement")
+    print("2. Depuis une recherche Openlibrary")
+    choix = input("veuillez choisir une option : 1 ou 2 : ")
+    if choix == '1':   
+        print("Ajout d'un nouveau livre :")
+        titre = input("Titre du livre : ")
+        auteur = input("Auteur du livre : ")
+        isbn = input("ISBN du livre : ")
+        quantite = int(input("Quantité disponible : "))
+        editeur = input("Éditeur du livre : ")
+        prix = float(input("Prix du livre : "))
+    elif choix == '2' :
+        recherche_isbn()
+    else:
+        print("\nOption invalide\n")
+        
     nouveau_livre = {
         "ID": len(data) + 1,  # Générer un nouvel ID en fonction de la longueur actuelle de la liste
         "Titre": titre,
@@ -170,6 +230,7 @@ def ajouter_livre():
         json.dump(data, f)
 
     print("Livre ajouté avec succès !")
+"""
 
 #MODIFIER UN LIVRE
 def modifier_livre():
@@ -223,6 +284,15 @@ def modifier_livre():
         print("Livre modifié avec succès.")
     else:
         print(f"Aucun livre trouvé avec l'ID '{id_livre}'.")
+        print("\n1. effectuer une autre recherche.")
+        print("2. Quitter le menu.\n")
+        choix = input("Veuillez choisir une option : 1 ou 2 : ")
+        if choix == '1':
+            modifier_livre()
+        elif choix == '2' :
+            print("\nVous avez quitté le menu.\n")
+        else:
+            print("\nOption invalide\n")
 
 #SUPPRIMER UN LIVRE
 def supprimer_livre():
@@ -266,4 +336,5 @@ def supprimer_livre():
 
 # Appel de la fonction principale pour démarrer l'interaction avec le client
 if __name__ == "__main__":
+    print("\nBienvenu.e !")
     interaction_première()

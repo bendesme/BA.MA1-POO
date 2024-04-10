@@ -1,0 +1,4 @@
+Gérer la quantité d'un même livre
+gérer plusieurs livres (diff) a encaisser (comme un panier)
+
+API OPENlibrary : uniquement pour valider une recherche et 
