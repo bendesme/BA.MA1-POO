@@ -257,7 +257,7 @@ def recherche_isbn():
         print("Aucune information trouvée pour cet ISBN.")
 
 # Fonction pour ajouter un livre
-def ajouter_livre():
+def ajouter_livre(livres_et_mangas):
     print("Voulez-vous ajouter un livre manuellement ou depuis une recherche Open Library ?")
     print("1. Manuellement")
     print("2. Depuis une recherche Open Library")
@@ -272,24 +272,13 @@ def ajouter_livre():
         editeur = input("Éditeur du livre : ")
         prix = float(input("Prix du livre : "))
 
-        try:
-            # Charger le contenu du fichier JSON existant
-            with open('data.json', 'r') as f:
-                data = json.load(f)
-        except FileNotFoundError:
-            # Si le fichier n'existe pas, initialiser une nouvelle liste
-            data = []
-
-        # Ajouter le nouveau livre à la liste existante
-        data.append(nouveau_livre.__dict__)
-
-        # Écrire les données mises à jour dans le fichier JSON
-        try:
-            with open('data.json', 'w') as f:
-                json.dump(data, f, indent=4)
-            print("Livre ajouté avec succès !")
-        except Exception as e:
-            print("Erreur lors de l'écriture dans le fichier JSON :", e)
+        # Créer un nouvel objet Livre
+        nouveau_livre = Livre(titre, auteur, isbn, quantite, editeur, prix, "livre")
+        # Ajouter le nouveau livre à la liste des livres et mangas
+        livres_et_mangas.append(nouveau_livre)
+        # Sauvegarder les données mises à jour dans le fichier JSON
+        sauvegarder_base_de_donnees(livres_et_mangas)
+        print("Livre modifié avec succès.")
         return nouveau_livre
 
     elif choix == '2':
@@ -299,9 +288,12 @@ def ajouter_livre():
         if livre_info:
             # Création d'un nouvel objet Livre
             nouveau_livre = Livre(*livre_info)
+            # Ajouter le nouveau livre à la liste des livres et mangas
+            livres_et_mangas.append(nouveau_livre)
+            # Sauvegarder les données mises à jour dans le fichier JSON
+            sauvegarder_base_de_donnees(livres_et_mangas)
             print("Livre ajouté avec succès !")
             return nouveau_livre
-
     else:
         print("\nOption invalide\n")
 
@@ -311,18 +303,18 @@ def ajouter_livre():
 
 
 ###                                       4. MODIFIER UN LIVRE
-def modifier_livre(livres):
+def modifier_livre(livres_et_mangas):
     print("Liste des titres des livres :")
 
     # Afficher la liste des titres des livres
-    for livre in livres:
+    for livre in livres_et_mangas:
         print(f"Titre: {livre.titre}")
 
     # Demander à l'utilisateur de choisir le titre du livre à modifier
     titre_livre = input("Entrez le titre du livre à modifier : ")
 
     # Rechercher le livre par titre
-    livre_a_modifier = rechercher_livre_par_titre(titre_livre, livres)
+    livre_a_modifier = rechercher_livre_par_titre(titre_livre, livres_et_mangas)
 
     # Si le livre est trouvé, permettre à l'utilisateur de modifier ses informations
     if livre_a_modifier:
@@ -350,7 +342,7 @@ def modifier_livre(livres):
         if nouveau_prix:
             livre_a_modifier.prix = float(nouveau_prix)
         # Sauvegarder les données mises à jour dans le fichier JSON
-        sauvegarder_base_de_donnees(livres)
+        sauvegarder_base_de_donnees(livres_et_mangas)
         print("Livre modifié avec succès.")
     else:
         print(f"Aucun livre trouvé avec le titre '{titre_livre}'.")
@@ -358,38 +350,43 @@ def modifier_livre(livres):
         print("2. Quitter le menu.\n")
         choix = input("Veuillez choisir une option : 1 ou 2 : ")
         if choix == '1':
-            modifier_livre(livres)
+            modifier_livre(livres_et_mangas)
         elif choix == '2' :
             print("\nVous avez quitté le menu.\n")
         else:
             print("\nOption invalide\n")
 
 
+
 ###                                      5. SUPPRIMER UN LIVRE
 # Fonction pour supprimer un livre
-def supprimer_livre(livres):
+def supprimer_livre(livres_et_mangas):
     print("Liste des titres des livres :")
 
     # Afficher la liste des titres des livres
-    for livre in livres:
+    for livre in livres_et_mangas:
         print(f"Titre: {livre.titre}")
 
     # Demander à l'utilisateur de choisir le titre du livre à supprimer
     titre_livre = input("Entrez le titre du livre à supprimer : ")
 
     # Rechercher le livre par titre
-    livre_a_supprimer = rechercher_livre_par_titre(titre_livre, livres)
+    livre_a_supprimer = None
+    for livre in livres_et_mangas:
+        if livre.titre.lower() == titre_livre.lower():
+            livre_a_supprimer = livre
+            break
 
     # Si le livre est trouvé, demander confirmation à l'utilisateur avant de le supprimer
     if livre_a_supprimer:
-        print(f"Livre trouvé : {livre_a_supprimer}")
+        print(f"Livre trouvé : {livre_a_supprimer.titre}")
         confirmation = input("Voulez-vous vraiment supprimer ce livre ? (o/n) : ").strip().lower()
 
         if confirmation == 'o' or confirmation == 'oui':
             # Supprimer le livre de la liste
-            livres.remove(livre_a_supprimer)
-            # Sauvegarder les données mises à jour dans le fichier JSON
-            sauvegarder_base_de_donnees(livres)
+            livres_et_mangas.remove(livre_a_supprimer)
+            # Enregistrer les modifications dans le fichier JSON
+            sauvegarder_base_de_donnees(livres_et_mangas)
             print("Livre supprimé avec succès.")
         else:
             print("Suppression annulée.")
@@ -399,12 +396,11 @@ def supprimer_livre(livres):
         print("2. Quitter le menu.\n")
         choix = input("Veuillez choisir une option : 1 ou 2 : ")
         if choix == '1':
-            supprimer_livre(livres)
+            supprimer_livre(livres_et_mangas)
         elif choix == '2' :
             print("\nVous avez quitté le menu.\n")
         else:
             print("\nOption invalide\n")
-
 
 
 

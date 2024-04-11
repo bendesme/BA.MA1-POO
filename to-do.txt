@@ -1,4 +1,7 @@
-Gérer la quantité d'un même livre
-gérer plusieurs livres (diff) a encaisser (comme un panier)
+MAJ de la base de données dans toutes les fonctions
+Verif prise en compte de Manga dans les fonctions
 
-API OPENlibrary : uniquement pour valider une recherche et 
+
+Faire fonctionner fonction ajouter
+
+Adapter machine client et employer

@@ -1,3 +1,4 @@
+"""
 import json
 
 # Fonction principale pour poser la question et gérer les réponses
@@ -211,45 +212,50 @@ def modifier_livre():
         print(f"Aucun livre trouvé avec l'ID '{id_livre}'.")
 
 #SUPPRIMER UN LIVRE
-def supprimer_livre():
+def supprimer_livre(livres_et_mangas):
     print("Liste des titres des livres :")
 
-    # Charger le contenu du fichier JSON dans une structure de données Python
-    with open('data.json', 'r') as f:
-        data = json.load(f)
-
     # Afficher la liste des titres des livres
-    for livre in data:
-        print(f"ID: {livre['ID']}, Titre: {livre['Titre']}")
+    for livre in livres_et_mangas:
+        print(f"Titre: {livre.titre}")
 
-    # Demander à l'utilisateur de choisir l'ID du livre à supprimer
-    id_livre = input("Entrez l'ID du livre à supprimer : ")
+    # Demander à l'utilisateur de choisir le titre du livre à supprimer
+    titre_livre = input("Entrez le titre du livre à supprimer : ")
 
-    # Rechercher le livre par ID
+    # Rechercher le livre par titre
     livre_a_supprimer = None
-    for livre in data:
-        if str(livre['ID']) == id_livre:
+    for livre in livres_et_mangas:
+        if livre.titre.lower() == titre_livre.lower():
             livre_a_supprimer = livre
             break
 
     # Si le livre est trouvé, demander confirmation à l'utilisateur avant de le supprimer
     if livre_a_supprimer:
-        print(f"Livre trouvé : {livre_a_supprimer['Titre']}")
+        print(f"Livre trouvé : {livre_a_supprimer.titre}")
         confirmation = input("Voulez-vous vraiment supprimer ce livre ? (o/n) : ").strip().lower()
 
         if confirmation == 'o' or confirmation == 'oui':
             # Supprimer le livre de la liste
-            data.remove(livre_a_supprimer)
+            livres_et_mangas.remove(livre_a_supprimer)
 
             # Enregistrer les modifications dans le fichier JSON
-            with open('data.json', 'w') as f:
-                json.dump(data, f, indent=4)
+            sauvegarder_base_de_donnees(livres_et_mangas)
             print("Livre supprimé avec succès.")
         else:
             print("Suppression annulée.")
     else:
-        print(f"Aucun livre trouvé avec l'ID '{id_livre}'.")
+        print(f"Aucun livre trouvé avec le titre '{titre_livre}'.")
+        print("\n1. effectuer une autre recherche.")
+        print("2. Quitter le menu.\n")
+        choix = input("Veuillez choisir une option : 1 ou 2 : ")
+        if choix == '1':
+            supprimer_livre(livres_et_mangas)
+        elif choix == '2' :
+            print("\nVous avez quitté le menu.\n")
+        else:
+            print("\nOption invalide\n")
 
 # Appel de la fonction principale pour démarrer l'interaction avec le client
 if __name__ == "__main__":
     interaction_première()
+"""
