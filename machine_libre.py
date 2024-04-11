@@ -1,6 +1,8 @@
 import requests
 import json
 
+###                                  LES CLASSES 
+
 # Définition de la classe parent "Livre"
 class Livre:
     def __init__(self, titre, auteur, isbn, quantite, editeur, prix, type):
@@ -14,7 +16,6 @@ class Livre:
 
     def __str__(self):
         return f"{self.titre} par {self.auteur}"
-
 # Définition de la classe enfant "Manga" qui hérite de la classe "Livre"
 class Manga(Livre):
     def __init__(self, titre, auteur, isbn, quantite, editeur, prix, genre, type):
@@ -24,6 +25,10 @@ class Manga(Livre):
     def __str__(self):
         return f"{self.titre} par {self.auteur} (Genre: {self.genre})"
 
+
+
+
+###                               GESTION DE BD
 def charger_base_de_donnees():
     try:
         with open('data.json', 'r') as f:
@@ -58,6 +63,8 @@ def sauvegarder_base_de_donnees(livres_et_mangas):
     except Exception as e:
         print("Erreur lors de l'écriture dans le fichier JSON :", e)
 
+
+###                              GESTION DES INTERACTIONS
 # Fonction principale pour poser la question et gérer les réponses
 def interaction_première(livres_et_mangas):
     print("1. Client")
@@ -116,7 +123,10 @@ def Interaction_employer(livres_et_mangas):
         print("Option invalide. Veuillez choisir une option valide : 1, 2, 3, 4, 5 ou 6 : ")
         Interaction_employer(livres_et_mangas)
 
-#                   1. RECHERCHER UN LIVRE
+
+
+
+###                           1. RECHERCHER UN LIVRE
 # Interaction pour rechercher un livre
 def rechercher_livre(livres_et_mangas):
     print("\nRecherche de livre :")
@@ -164,7 +174,10 @@ def rechercher_livre(livres_et_mangas):
 
     return resultats
 
-#                   2. ENCAISSER UN LIVRE
+
+
+
+###                                 2. ENCAISSER UN LIVRE
 # Fonction pour rechercher un livre par titre
 def rechercher_livre_par_titre(titre_recherche, livres):
     for livre in livres:
@@ -216,7 +229,9 @@ def encaisser_livre(livres):
         else:
             print("\nOption invalide\n")
 
-#                       3. AJOUTER UN LIVRE
+
+
+###                                 3. AJOUTER UN LIVRE
 # Fonction pour rechercher un livre par ISBN sur Open Library
 def recherche_isbn():
     isbn = input("Veuillez entrer un numéro ISBN : ")
@@ -292,7 +307,10 @@ def ajouter_livre():
 
     return None
 
-#                           4. MODIFIER UN LIVRE
+
+
+
+###                                       4. MODIFIER UN LIVRE
 def modifier_livre(livres):
     print("Liste des titres des livres :")
 
@@ -346,6 +364,8 @@ def modifier_livre(livres):
         else:
             print("\nOption invalide\n")
 
+
+###                                      5. SUPPRIMER UN LIVRE
 # Fonction pour supprimer un livre
 def supprimer_livre(livres):
     print("Liste des titres des livres :")
@@ -385,7 +405,10 @@ def supprimer_livre(livres):
         else:
             print("\nOption invalide\n")
 
-# Appel de la fonction principale pour démarrer l'interaction avec le client
+
+
+
+###              FONCTION PRINCIPALE
 if __name__ == "__main__":
     print("\nBienvenu.e !")
     liste_livres = charger_base_de_donnees()
