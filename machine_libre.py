@@ -263,22 +263,42 @@ def ajouter_livre(livres_et_mangas):
     choix = input("Veuillez choisir une option : 1 ou 2 : ")
 
     if choix == '1':
-        print("Ajout d'un nouveau livre :")
-        titre = input("Titre du livre : ")
-        auteur = input("Auteur du livre : ")
-        isbn = input("ISBN du livre : ")
-        quantite = int(input("Quantité disponible : "))
-        editeur = input("Éditeur du livre : ")
-        prix = float(input("Prix du livre : "))
-
-        # Créer un nouvel objet Livre
-        nouveau_livre = Livre(titre, auteur, isbn, quantite, editeur, prix, "livre")
-        # Ajouter le nouveau livre à la liste des livres et mangas
-        livres_et_mangas.append(nouveau_livre)
-        # Sauvegarder les données mises à jour dans le fichier JSON
-        sauvegarder_base_de_donnees(livres_et_mangas)
-        print("Livre modifié avec succès.")
-        return nouveau_livre
+        print("1. Livre")
+        print("2. Manga")
+        choix2 = input("Veuillez choisir une option : 1 ou 2 : ")
+        if choix2 == '1':
+            print("Ajout d'un nouveau livre :")
+            titre = input("Titre du livre : ")
+            auteur = input("Auteur du livre : ")
+            isbn = input("ISBN du livre : ")
+            quantite = int(input("Quantité disponible : "))
+            editeur = input("Éditeur du livre : ")
+            prix = float(input("Prix du livre : "))
+            # Créer un nouvel objet Livre
+            nouveau_livre = Livre(titre, auteur, isbn, quantite, editeur, prix, genre, "livre")
+            # Ajouter le nouveau livre à la liste des livres et mangas
+            livres_et_mangas.append(nouveau_livre)
+            # Sauvegarder les données mises à jour dans le fichier JSON
+            sauvegarder_base_de_donnees(livres_et_mangas)
+            print("Livre modifié avec succès.")
+            return nouveau_livre
+        if choix == '2':
+            print("Ajout d'un nouveau manga :")
+            titre = input("Titre du manga : ")
+            auteur = input("Auteur du manga : ")
+            isbn = input("ISBN du manga : ")
+            quantite = int(input("Quantité disponible : "))
+            editeur = input("Éditeur du manga : ")
+            prix = float(input("Prix du manga : "))
+            genre = input("Genre du manga : ")
+            # Créer un nouvel objet Manga
+            nouveau_manga = Manga(titre, auteur, isbn, quantite, editeur, prix, genre, "manga")
+            # Ajouter le nouveau manga à la liste des livres et mangas
+            livres_et_mangas.append(nouveau_manga)
+            # Sauvegarder les données mises à jour dans le fichier JSON
+            sauvegarder_base_de_donnees(livres_et_mangas)
+            print("Manga ajouté avec succès.")
+            return nouveau_manga
 
     elif choix == '2':
         # Recherche d'un livre par ISBN sur Open Library
