@@ -117,5 +117,15 @@
         "editeur": "Test",
         "prix": 15.0,
         "type": "livre"
+    },
+    {
+        "titre": "Naruto Shipudden",
+        "auteur": "Kishimoto",
+        "isbn": "6884954",
+        "quantite": 5,
+        "editeur": "LALA",
+        "prix": 20.0,
+        "type": "manga",
+        "genre": "Shonen"
     }
 ]

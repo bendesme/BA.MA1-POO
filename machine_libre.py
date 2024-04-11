@@ -282,7 +282,7 @@ def ajouter_livre(livres_et_mangas):
             sauvegarder_base_de_donnees(livres_et_mangas)
             print("Livre modifié avec succès.")
             return nouveau_livre
-        if choix == '2':
+        if choix2 == '2':
             print("Ajout d'un nouveau manga :")
             titre = input("Titre du manga : ")
             auteur = input("Auteur du manga : ")
