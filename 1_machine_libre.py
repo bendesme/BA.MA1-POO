@@ -245,14 +245,13 @@ def recherche_isbn():
         livre_info = data[f"ISBN:{isbn}"]
         title = livre_info['title']
         authors = livre_info['authors'][0]['name'] if 'authors' in livre_info else 'Inconnu'
-        publish_date = livre_info['publish_date'] if 'publish_date' in livre_info else 'Inconnue'
         publishers = livre_info['publishers'][0]['name'] if 'publishers' in livre_info else 'Inconnu'
-
         # Demander à l'utilisateur de saisir la quantité et le prix
         quantity = int(input(f"Quantité en stock pour {title} : "))
         price = float(input(f"Prix unitaire (en €) pour {title} : "))
+        type = "livre"
 
-        return title, authors, publish_date, publishers, isbn, quantity, price
+        return title, authors, isbn, quantity, publishers, price, type
     else:
         print("Aucune information trouvée pour cet ISBN.")
 

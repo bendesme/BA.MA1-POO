@@ -117,5 +117,14 @@
         "editeur": "9786073156042",
         "prix": 5,
         "type": "livre"
+    },
+    {
+        "titre": "Imperio de tormentas",
+        "auteur": "Sarah J. Maas",
+        "isbn": "9786073156042",
+        "quantite": 10,
+        "editeur": "Alfaguara Juvenil",
+        "prix": 20.0,
+        "type": "livre"
     }
 ]
