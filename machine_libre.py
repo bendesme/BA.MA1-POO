@@ -297,11 +297,7 @@ def ajouter_livre(livres_et_mangas):
         print("\nOption invalide\n")
 
     return None
-
-
-
-
-###                                       4. MODIFIER UN LIVRE
+## 4. MODIFIER UN LIVRE
 def modifier_livre(livres_et_mangas):
     print("Liste des titres des livres :")
 
@@ -372,7 +368,7 @@ def supprimer_livre(livres_et_mangas):
     # Rechercher le livre par titre
     livre_a_supprimer = None
     for livre in livres_et_mangas:
-        if livre.titre.lower() == titre_livre.lower():
+        if livre.titre.lower() == titre_livre.strip().lower()
             livre_a_supprimer = livre
             break
 
