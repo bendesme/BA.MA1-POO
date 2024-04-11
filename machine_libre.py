@@ -23,27 +23,41 @@ class Manga(Livre):
     def __str__(self):
         return f"{self.titre} par {self.auteur} (Genre: {self.genre})"
 
+# Charger les données depuis le fichier JSON et créer des objets de classe Livre
+def charger_base_de_donnees():
+    try:
+        with open('data.json', 'r') as f:
+            data = json.load(f)
+            livres = []
+            for livre_data in data:
+                livre = Livre(livre_data["Titre"], livre_data["Auteur"], livre_data["ISBN"], livre_data["quantité"], livre_data["éditeur"], livre_data["prix"])
+                livres.append(livre)
+            return livres
+    except FileNotFoundError:
+        print("Le fichier de base de données n'a pas été trouvé.")
+        return []
+
 # Fonction principale pour poser la question et gérer les réponses
-def interaction_première():
+def interaction_première(livres):
     print("1. Client")
     print("2. Employer")
     print("3. Quitter le menu")
     choix = input("\nChoisissez une option : 1, 2 ou 3 : ")
 
     if choix == '1':
-        Interaction_client()
+        Interaction_client(livres)
     elif choix == '2':
         code = input("Veuillez entrer le code d'accès : ")
         if verif_code(code):
-            Interaction_employer()
+            Interaction_employer(livres)
         else:
             print("\nCode d'accès incorrect.")
-            interaction_première()
+            interaction_première(livres)
     elif choix == '3':
         print("\n Vous avez quitté le menu. \n")
     else:
         print("\nOption invalide. Veuillez choisir une option valide : 1, 2 ou 3 : ")
-        interaction_première()
+        interaction_première(livres)
 
 # Fonction pour verif code employer
 def verif_code(code):
@@ -51,11 +65,11 @@ def verif_code(code):
     return code == code_ok
 
 # Définition des fonctions pour chaque option de réponse
-def Interaction_client():
+def Interaction_client(livres):
     print("\nVous avez choisi l'option Client.")
-    rechercher_livre()
+    rechercher_livre(livres)
 
-def Interaction_employer():
+def Interaction_employer(livres):
     print("\nVous avez choisi l'option Employer.")
     print("1. Rechercher un livre")
     print("2. Encaisser un livre")
@@ -66,20 +80,20 @@ def Interaction_employer():
     choix = input("Choisissez une option : 1, 2, 3, 4, 5 ou 6 : ")
 
     if choix == '1':
-        rechercher_livre()
+        rechercher_livre(livres)
     elif choix == '2':
-        encaisser_livre()
+        encaisser_livre(livres)
     elif choix == '3':
-        ajouter_livre()
+        ajouter_livre(livres)
     elif choix == '4':
-        modifier_livre()
+        modifier_livre(livres)
     elif choix == '5':
-        supprimer_livre()
+        supprimer_livre(livres)
     elif choix == '6':
         print("\nVous avez quitté le menu.\n")
     else:
         print("Option invalide. Veuillez choisir une option valide : 1, 2, 3, 4, 5 ou 6 : ")
-        Interaction_employer()
+        Interaction_employer(livres)
 
 #                   1. RECHERCHER UN LIVRE
 # Interaction pour rechercher un livre
@@ -114,7 +128,7 @@ def rechercher_livre(livres):
         print("2. Quitter le menu.\n")
         choix = input("Veuillez choisir une option : 1 ou 2 : ")
         if choix == '1':
-            rechercher_livre()
+            rechercher_livre(livres)
         elif choix == '2' :
             print("\nVous avez quitté le menu.\n")
         else:
@@ -341,4 +355,5 @@ def supprimer_livre(livres):
 # Appel de la fonction principale pour démarrer l'interaction avec le client
 if __name__ == "__main__":
     print("\nBienvenu.e !")
-    interaction_première()
+    liste_livres = charger_base_de_donnees()
+    interaction_première(liste_livres)
