@@ -75,6 +75,7 @@ def interaction_première(livres_et_mangas):
     if choix == '1':
         Interaction_client(livres_et_mangas)
     elif choix == '2':
+        print("\nVous avez choisi l'option Employer.")
         code = input("Veuillez entrer le code d'accès : ")
         if verif_code(code):
             Interaction_employer(livres_et_mangas)
@@ -98,7 +99,6 @@ def Interaction_client(livres_et_mangas):
     rechercher_livre(livres_et_mangas)
 
 def Interaction_employer(livres_et_mangas):
-    print("\nVous avez choisi l'option Employer.")
     print("1. Rechercher un livre")
     print("2. Encaisser un livre")
     print("3. Ajouter un livre au stock")

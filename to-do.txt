@@ -1,7 +1,0 @@
-MAJ de la base de données dans toutes les fonctions
-Verif prise en compte de Manga dans les fonctions
-
-
-Faire fonctionner fonction ajouter
-
-Adapter machine client et employer
