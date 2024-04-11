@@ -3,61 +3,82 @@ import json
 
 # Définition de la classe parent "Livre"
 class Livre:
-    def __init__(self, titre, auteur, isbn, quantite, editeur, prix):
+    def __init__(self, titre, auteur, isbn, quantite, editeur, prix, type):
         self.titre = titre
         self.auteur = auteur
         self.isbn = isbn
         self.quantite = quantite
         self.editeur = editeur
         self.prix = prix
+        self.type = type
 
     def __str__(self):
         return f"{self.titre} par {self.auteur}"
 
 # Définition de la classe enfant "Manga" qui hérite de la classe "Livre"
 class Manga(Livre):
-    def __init__(self, titre, auteur, isbn, quantite, editeur, prix, genre):
-        super().__init__(titre, auteur, isbn, quantite, editeur, prix)
+    def __init__(self, titre, auteur, isbn, quantite, editeur, prix, genre, type):
+        super().__init__(titre, auteur, isbn, quantite, editeur, prix, type)
         self.genre = genre
 
     def __str__(self):
         return f"{self.titre} par {self.auteur} (Genre: {self.genre})"
 
-# Charger les données depuis le fichier JSON et créer des objets de classe Livre
 def charger_base_de_donnees():
     try:
         with open('data.json', 'r') as f:
             data = json.load(f)
-            livres = []
-            for livre_data in data:
-                livre = Livre(livre_data["Titre"], livre_data["Auteur"], livre_data["ISBN"], livre_data["quantité"], livre_data["éditeur"], livre_data["prix"])
-                livres.append(livre)
-            return livres
+            livres_et_mangas = []
+            for item_data in data:
+                if item_data["type"] == "manga":
+                    manga = Manga(item_data["titre"], item_data["auteur"], item_data["isbn"], item_data["quantite"], item_data["editeur"], item_data["prix"], item_data["genre"], item_data["type"])
+                    livres_et_mangas.append(manga)
+                else:  # Sinon, c'est un livre
+                    livre = Livre(item_data["titre"], item_data["auteur"], item_data["isbn"], item_data["quantite"], item_data["editeur"], item_data["prix"], item_data["type"])
+                    livres_et_mangas.append(livre)
+            return livres_et_mangas
     except FileNotFoundError:
         print("Le fichier de base de données n'a pas été trouvé.")
         return []
 
+def sauvegarder_base_de_donnees(livres_et_mangas):
+    try:
+        with open('data.json', 'w') as f:
+            # Convertir les objets Livre et Manga en dictionnaires pour la sérialisation JSON
+            livres_et_mangas_data = []
+            for item in livres_et_mangas:
+                item_data = item.__dict__
+                if isinstance(item, Manga):
+                    item_data["type"] = "manga"
+                else:
+                    item_data["type"] = "livre"
+                livres_et_mangas_data.append(item_data)
+            json.dump(livres_et_mangas_data, f, indent=4)
+            print("Données mises à jour sauvegardées avec succès.")
+    except Exception as e:
+        print("Erreur lors de l'écriture dans le fichier JSON :", e)
+
 # Fonction principale pour poser la question et gérer les réponses
-def interaction_première(livres):
+def interaction_première(livres_et_mangas):
     print("1. Client")
     print("2. Employer")
     print("3. Quitter le menu")
     choix = input("\nChoisissez une option : 1, 2 ou 3 : ")
 
     if choix == '1':
-        Interaction_client(livres)
+        Interaction_client(livres_et_mangas)
     elif choix == '2':
         code = input("Veuillez entrer le code d'accès : ")
         if verif_code(code):
-            Interaction_employer(livres)
+            Interaction_employer(livres_et_mangas)
         else:
             print("\nCode d'accès incorrect.")
-            interaction_première(livres)
+            interaction_première(livres_et_mangas)
     elif choix == '3':
         print("\n Vous avez quitté le menu. \n")
     else:
         print("\nOption invalide. Veuillez choisir une option valide : 1, 2 ou 3 : ")
-        interaction_première(livres)
+        interaction_première(livres_et_mangas)
 
 # Fonction pour verif code employer
 def verif_code(code):
@@ -65,11 +86,11 @@ def verif_code(code):
     return code == code_ok
 
 # Définition des fonctions pour chaque option de réponse
-def Interaction_client(livres):
+def Interaction_client(livres_et_mangas):
     print("\nVous avez choisi l'option Client.")
-    rechercher_livre(livres)
+    rechercher_livre(livres_et_mangas)
 
-def Interaction_employer(livres):
+def Interaction_employer(livres_et_mangas):
     print("\nVous avez choisi l'option Employer.")
     print("1. Rechercher un livre")
     print("2. Encaisser un livre")
@@ -80,32 +101,32 @@ def Interaction_employer(livres):
     choix = input("Choisissez une option : 1, 2, 3, 4, 5 ou 6 : ")
 
     if choix == '1':
-        rechercher_livre(livres)
+        rechercher_livre(livres_et_mangas)
     elif choix == '2':
-        encaisser_livre(livres)
+        encaisser_livre(livres_et_mangas)
     elif choix == '3':
-        ajouter_livre(livres)
+        ajouter_livre(livres_et_mangas)
     elif choix == '4':
-        modifier_livre(livres)
+        modifier_livre(livres_et_mangas)
     elif choix == '5':
-        supprimer_livre(livres)
+        supprimer_livre(livres_et_mangas)
     elif choix == '6':
         print("\nVous avez quitté le menu.\n")
     else:
         print("Option invalide. Veuillez choisir une option valide : 1, 2, 3, 4, 5 ou 6 : ")
-        Interaction_employer(livres)
+        Interaction_employer(livres_et_mangas)
 
 #                   1. RECHERCHER UN LIVRE
 # Interaction pour rechercher un livre
-def rechercher_livre(livres):
+def rechercher_livre(livres_et_mangas):
     print("\nRecherche de livre :")
-    critere_recherche = input("Entrez le titre, l'auteur, l'ISBN ou l'éditeur du livre que vous recherchez : ").strip().lower()
+    critere_recherche = input("Entrez le titre, l'auteur, l'ISBN ou l'éditeur du livre ou manga que vous recherchez : ").strip().lower()
 
     # Créer une liste pour stocker les résultats de la recherche
     resultats = []
 
-    # Parcourir chaque livre dans la liste pour vérifier les critères de recherche
-    for livre in livres:
+    # Parcourir chaque livre ou manga dans la liste pour vérifier les critères de recherche
+    for livre in livres_et_mangas:
         if critere_recherche in livre.titre.lower() \
                 or critere_recherche in livre.auteur.lower() \
                 or critere_recherche in livre.isbn.lower() \
@@ -114,26 +135,33 @@ def rechercher_livre(livres):
 
     # Afficher les résultats de la recherche
     if resultats:
-        print("\n Résultats de la recherche :")
+        print("\nRésultats de la recherche :")
         for livre in resultats:
             print(f"\nTitre: {livre.titre}")
             print(f"Auteur: {livre.auteur}")
             print(f"ISBN: {livre.isbn}")
             print(f"Quantité: {livre.quantite}")
             print(f"Éditeur: {livre.editeur}")
-            print(f"Prix: {livre.prix}€\n")
+            print(f"Prix: {livre.prix}€")
+            print(f"Type: {livre.type}")
+            # Vérifier si l'objet est un manga et afficher son genre
+            if isinstance(livre, Manga):
+                print(f"Genre: {livre.genre}\n")
+            else:
+                print("")
+
     else:
-        print("\nAucun livre trouvé correspondant à votre recherche.\n")
-        print("\n1. effectuer une autre recherche.")
+        print("\nAucun livre/manga trouvé correspondant à votre recherche.\n")
+        print("\n1. Effectuer une autre recherche.")
         print("2. Quitter le menu.\n")
         choix = input("Veuillez choisir une option : 1 ou 2 : ")
         if choix == '1':
-            rechercher_livre(livres)
-        elif choix == '2' :
+            rechercher_livre(livres_et_mangas)
+        elif choix == '2':
             print("\nVous avez quitté le menu.\n")
         else:
             print("\nOption invalide\n")
-        
+
     return resultats
 
 #                   2. ENCAISSER UN LIVRE
@@ -165,6 +193,8 @@ def encaisser_livre(livres):
                 print(f"\nPrix à payer pour ce livre : '{livre.prix}€")
                 if livre.quantite == 0:
                     print("\nAttention : Ce livre est maintenant Sold Out.\n")
+                # Sauvegarder les données mises à jour dans le fichier JSON
+                sauvegarder_base_de_donnees(livres)
             else:
                 print("\nDésolé, ce livre est déjà Sold Out.\n")
         elif choix == '2':
@@ -301,7 +331,8 @@ def modifier_livre(livres):
             livre_a_modifier.editeur = nouveau_editeur
         if nouveau_prix:
             livre_a_modifier.prix = float(nouveau_prix)
-
+        # Sauvegarder les données mises à jour dans le fichier JSON
+        sauvegarder_base_de_donnees(livres)
         print("Livre modifié avec succès.")
     else:
         print(f"Aucun livre trouvé avec le titre '{titre_livre}'.")
@@ -337,6 +368,8 @@ def supprimer_livre(livres):
         if confirmation == 'o' or confirmation == 'oui':
             # Supprimer le livre de la liste
             livres.remove(livre_a_supprimer)
+            # Sauvegarder les données mises à jour dans le fichier JSON
+            sauvegarder_base_de_donnees(livres)
             print("Livre supprimé avec succès.")
         else:
             print("Suppression annulée.")

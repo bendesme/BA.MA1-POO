@@ -1,92 +1,112 @@
 [
     {
-        "ID": 1,
-        "Titre": "Harry Potter \u00e0 l'\u00e9cole des sorciers",
-        "Auteur": "J.K. Rowling",
-        "ISBN": "978-2070643028",
-        "quantit\u00e9": 4,
-        "\u00e9diteur": "Gallimard",
-        "prix": 20.5
+        "titre": "Harry Potter \u00e0 l'\u00e9cole des sorciers",
+        "auteur": "J.K. Rowling",
+        "isbn": "978-2070643028",
+        "quantite": 3,
+        "editeur": "Gallimard",
+        "prix": 20.5,
+        "type": "livre"
     },
     {
-        "ID": 2,
-        "Titre": "Le Seigneur des Anneaux : La Communaut\u00e9 de l'Anneau",
-        "Auteur": "J.R.R. Tolkien",
-        "ISBN": "978-2266182778",
-        "quantit\u00e9": 3,
-        "\u00e9diteur": "Pocket",
-        "prix": 25.0
+        "titre": "Le Seigneur des Anneaux : La Communaut\u00e9 de l'Anneau",
+        "auteur": "J.R.R. Tolkien",
+        "isbn": "978-2266182778",
+        "quantite": 3,
+        "editeur": "Pocket",
+        "prix": 25.0,
+        "type": "livre"
     },
     {
-        "ID": 3,
-        "Titre": "1984",
-        "Auteur": "George Orwell",
-        "ISBN": "978-2070407262",
-        "quantit\u00e9": 6,
-        "\u00e9diteur": "Gallimard",
-        "prix": 18.9
+        "titre": "1984",
+        "auteur": "George Orwell",
+        "isbn": "978-2070407262",
+        "quantite": 6,
+        "editeur": "Gallimard",
+        "prix": 18.9,
+        "type": "livre"
     },
     {
-        "ID": 4,
-        "Titre": "Le Petit Prince",
-        "Auteur": "Antoine de Saint-Exup\u00e9ry",
-        "ISBN": "978-2070612758",
-        "quantit\u00e9": 10,
-        "\u00e9diteur": "Gallimard",
-        "prix": 12.0
+        "titre": "Le Petit Prince",
+        "auteur": "Antoine de Saint-Exup\u00e9ry",
+        "isbn": "978-2070612758",
+        "quantite": 10,
+        "editeur": "Gallimard",
+        "prix": 12.0,
+        "type": "livre"
     },
     {
-        "ID": 5,
-        "Titre": "To Kill a Mockingbird",
-        "Auteur": "Harper Lee",
-        "ISBN": "978-0061120084",
-        "quantit\u00e9": 4,
-        "\u00e9diteur": "Grand Central Publishing",
-        "prix": 14.99
+        "titre": "To Kill a Mockingbird",
+        "auteur": "Harper Lee",
+        "isbn": "978-0061120084",
+        "quantite": 4,
+        "editeur": "Grand Central Publishing",
+        "prix": 14.99,
+        "type": "livre"
     },
     {
-        "ID": 6,
-        "Titre": "Don Quichotte",
-        "Auteur": "Miguel de Cervantes",
-        "ISBN": "978-2070368228",
-        "quantit\u00e9": 6,
-        "\u00e9diteur": "Gallimard",
-        "prix": 28.5
+        "titre": "Don Quichotte",
+        "auteur": "Miguel de Cervantes",
+        "isbn": "978-2070368228",
+        "quantite": 6,
+        "editeur": "Gallimard",
+        "prix": 28.5,
+        "type": "livre"
     },
     {
-        "ID": 7,
-        "Titre": "Les Mis\u00e9rables",
-        "Auteur": "Victor Hugo",
-        "ISBN": "978-0140444308",
-        "quantit\u00e9": 0,
-        "\u00e9diteur": "Penguin Classics",
-        "prix": 30.0
+        "titre": "Les Mis\u00e9rables",
+        "auteur": "Victor Hugo",
+        "isbn": "978-0140444308",
+        "quantite": 0,
+        "editeur": "Penguin Classics",
+        "prix": 30.0,
+        "type": "livre"
     },
     {
-        "ID": 8,
-        "Titre": "The Great Gatsby",
-        "Auteur": "F. Scott Fitzgerald",
-        "ISBN": "978-0743273565",
-        "quantit\u00e9": 8,
-        "\u00e9diteur": "Scribner",
-        "prix": 17.99
+        "titre": "The Great Gatsby",
+        "auteur": "F. Scott Fitzgerald",
+        "isbn": "978-0743273565",
+        "quantite": 8,
+        "editeur": "Scribner",
+        "prix": 17.99,
+        "type": "livre"
     },
     {
-        "ID": 9,
-        "Titre": "Pride and Prejudice",
-        "Auteur": "Jane Austen",
-        "ISBN": "978-0141439518",
-        "quantit\u00e9": 9,
-        "\u00e9diteur": "Penguin Classics",
-        "prix": 16.0
+        "titre": "Pride and Prejudice",
+        "auteur": "Jane Austen",
+        "isbn": "978-0141439518",
+        "quantite": 9,
+        "editeur": "Penguin Classics",
+        "prix": 16.0,
+        "type": "livre"
     },
     {
-        "ID": 10,
-        "Titre": "L'\u00c9tranger",
-        "Auteur": "Albert Camus",
-        "ISBN": "978-2070368228",
-        "quantit\u00e9": 5,
-        "\u00e9diteur": "Gallimard",
-        "prix": 21.0
+        "titre": "L'\u00c9tranger",
+        "auteur": "Albert Camus",
+        "isbn": "978-2070368228",
+        "quantite": 5,
+        "editeur": "Gallimard",
+        "prix": 21.0,
+        "type": "livre"
+    },
+    {
+        "titre": "One Piece",
+        "auteur": "Eiichiro Oda",
+        "isbn": "978-2723455647",
+        "quantite": 7,
+        "editeur": "Gl\u00e9nat",
+        "prix": 6.9,
+        "type": "manga",
+        "genre": "Shonen"
+    },
+    {
+        "titre": "Naruto",
+        "auteur": "Masashi Kishimoto",
+        "isbn": "978-2723445976",
+        "quantite": 4,
+        "editeur": "Gl\u00e9nat",
+        "prix": 7.6,
+        "type": "manga",
+        "genre": "Shonen"
     }
 ]
