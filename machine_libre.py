@@ -323,21 +323,21 @@ def ajouter_livre(livres_et_mangas):
 
 ###                                       4. MODIFIER UN LIVRE
 def modifier_livre(livres_et_mangas):
-    print("Liste des titres des livres :")
+    print("Liste des titres des livres et des mangas :")
 
-    # Afficher la liste des titres des livres
+    # Afficher la liste des titres des livres et des mangas
     for livre in livres_et_mangas:
         print(f"Titre: {livre.titre}")
 
-    # Demander à l'utilisateur de choisir le titre du livre à modifier
-    titre_livre = input("Entrez le titre du livre à modifier : ")
+    # Demander à l'utilisateur de choisir le titre du livre ou du manga à modifier
+    titre_livre_ou_manga = input("Entrez le titre du livre ou du manga à modifier : ")
 
-    # Rechercher le livre par titre
-    livre_a_modifier = rechercher_livre_par_titre(titre_livre, livres_et_mangas)
+    # Rechercher le livre ou le manga par titre
+    livre_ou_manga_a_modifier = rechercher_livre_par_titre(titre_livre_ou_manga, livres_et_mangas)
 
-    # Si le livre est trouvé, permettre à l'utilisateur de modifier ses informations
-    if livre_a_modifier:
-        print(f"Livre trouvé : {livre_a_modifier}")
+    # Si le livre ou le manga est trouvé, permettre à l'utilisateur de modifier ses informations
+    if livre_ou_manga_a_modifier:
+        print(f"Livre ou manga trouvé : {livre_ou_manga_a_modifier}")
 
         # Demander les nouvelles informations à l'utilisateur
         nouveau_titre = input("Entrez le nouveau titre (laissez vide pour ne pas modifier) : ").strip()
@@ -346,31 +346,36 @@ def modifier_livre(livres_et_mangas):
         nouvelle_quantite = input("Entrez la nouvelle quantité (laissez vide pour ne pas modifier) : ").strip()
         nouveau_editeur = input("Entrez le nouvel éditeur (laissez vide pour ne pas modifier) : ").strip()
         nouveau_prix = input("Entrez le nouveau prix (laissez vide pour ne pas modifier) : ").strip()
+        nouveau_genre = input("Entrez le nouveau genre (laissez vide pour ne pas modifier) : ").strip()
 
-        # Mettre à jour les informations du livre si l'utilisateur a fourni de nouvelles valeurs
+        # Mettre à jour les informations du livre ou du manga si l'utilisateur a fourni de nouvelles valeurs
         if nouveau_titre:
-            livre_a_modifier.titre = nouveau_titre
+            livre_ou_manga_a_modifier.titre = nouveau_titre
         if nouveau_auteur:
-            livre_a_modifier.auteur = nouveau_auteur
+            livre_ou_manga_a_modifier.auteur = nouveau_auteur
         if nouveau_isbn:
-            livre_a_modifier.isbn = nouveau_isbn
+            livre_ou_manga_a_modifier.isbn = nouveau_isbn
         if nouvelle_quantite:
-            livre_a_modifier.quantite = int(nouvelle_quantite)
+            livre_ou_manga_a_modifier.quantite = int(nouvelle_quantite)
         if nouveau_editeur:
-            livre_a_modifier.editeur = nouveau_editeur
+            livre_ou_manga_a_modifier.editeur = nouveau_editeur
         if nouveau_prix:
-            livre_a_modifier.prix = float(nouveau_prix)
+            livre_ou_manga_a_modifier.prix = float(nouveau_prix)
+        # Vérifier si l'élément à modifier est un manga et mettre à jour le genre
+        if isinstance(livre_ou_manga_a_modifier, Manga):
+            if nouveau_genre:
+                livre_ou_manga_a_modifier.genre = nouveau_genre
         # Sauvegarder les données mises à jour dans le fichier JSON
         sauvegarder_base_de_donnees(livres_et_mangas)
-        print("Livre modifié avec succès.")
+        print("Livre ou manga modifié avec succès.")
     else:
-        print(f"Aucun livre trouvé avec le titre '{titre_livre}'.")
+        print(f"Aucun livre ou manga trouvé avec le titre '{titre_livre_ou_manga}'.")
         print("\n1. effectuer une autre recherche.")
         print("2. Quitter le menu.\n")
         choix = input("Veuillez choisir une option : 1 ou 2 : ")
         if choix == '1':
             modifier_livre(livres_et_mangas)
-        elif choix == '2' :
+        elif choix == '2':
             print("\nVous avez quitté le menu.\n")
         else:
             print("\nOption invalide\n")
